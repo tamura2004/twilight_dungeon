@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :action do
-    name "MyString"
-    source 1
-    target 1
-    message "MyString"
+    name "攻撃"
+    association :source, factory: :player
+    association :target, factory: :monster
+    message ""
   end
 end

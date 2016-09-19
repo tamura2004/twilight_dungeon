@@ -26,15 +26,6 @@ RSpec.describe Player, type: :model do
     end
   end
 
-  it "クリティカルヒット" do
-    monster = build(:monster)
-    monster.update(hp: 100)
-
-    expect {
-      player.attack(monster,20)
-    }.to change {monster.hp}.from(100).to(0)
-  end
-
   it "hp以下のダメージを受けた" do
     player.update(hp: 10)
 
@@ -53,12 +44,16 @@ RSpec.describe Player, type: :model do
 
     it "生きているプレイヤー" do
     player.save
+    expect(player.lived?).to eq true
+    expect(player.dead?).to eq false
     expect(Player.lived).to eq [player]
     expect(Player.dead).to eq []
   end
 
   it "死んでいるプレイヤー" do
     player.update(hp: 0)
+    expect(player.lived?).to eq false
+    expect(player.dead?).to eq true
     expect(Player.lived).to eq []
     expect(Player.dead).to eq [player]
   end

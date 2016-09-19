@@ -53,12 +53,16 @@ RSpec.describe Monster, type: :model do
 
   it "生きているモンスター" do
     monster.save
+    expect(monster.lived?).to eq true
+    expect(monster.dead?).to eq false
     expect(Monster.lived).to eq [monster]
     expect(Monster.dead).to eq []
   end
 
   it "死んでいるモンスター" do
     monster.update(hp: 0)
+    expect(monster.lived?).to eq false
+    expect(monster.dead?).to eq true
     expect(Monster.lived).to eq []
     expect(Monster.dead).to eq [monster]
   end

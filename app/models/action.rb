@@ -7,7 +7,7 @@ class Action < ApplicationRecord
 
     case name
     when "攻撃"
-      self.message = "#{source.name}の攻撃。\n"
+      self.message = "#{source.name}の攻撃。d20->#{d20}\n"
       attack(d20)
     else
     end

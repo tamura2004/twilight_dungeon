@@ -8,5 +8,9 @@ FactoryGirl.define do
     df 1
     exp 100
     association :game, factory: :game
+
+    factory :monster_hp_100 do
+      hp 100
+    end
   end
 end

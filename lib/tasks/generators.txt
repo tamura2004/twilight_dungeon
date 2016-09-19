@@ -1,0 +1,8 @@
+rails g model dungeon name level:integer depth:integer
+rails g model game dungeon:references depth:integer score:integer
+
+rails g model monster name skill level:integer hp:integer at:integer df:integer exp:integer game:references
+
+rails g model player name skill level:integer hp:integer at:integer df:integer exp:integer game:references
+
+rails g model item name player:references

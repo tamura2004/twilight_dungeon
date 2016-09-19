@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Monster, type: :model do
-  let(:monster){FactoryGirl.build(:monster)}
+  let(:monster){build(:monster)}
 
   it "妥当なオブジェクト" do
     expect(monster).to be_valid
@@ -58,8 +58,7 @@ RSpec.describe Monster, type: :model do
   end
 
   it "死んでいるモンスター" do
-    monster.hp = 0
-    monster.save
+    monster.update(hp: 0)
     expect(Monster.lived).to eq []
     expect(Monster.dead).to eq [monster]
   end

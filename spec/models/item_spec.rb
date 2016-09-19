@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  let(:item){FactoryGirl.build(:item)}
+  let(:item){build(:item)}
 
   it "妥当なオブジェクト" do
     expect(item).to be_valid

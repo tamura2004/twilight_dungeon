@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Dungeon, type: :model do
-  let(:dungeon) {FactoryGirl.build(:dungeon)}
+  let(:dungeon) {build(:dungeon)}
 
   it "妥当なオブジェクト" do
     expect(dungeon).to be_valid

@@ -7,45 +7,11 @@ class Action < ApplicationRecord
 
     case name
     when "攻撃"
-      self.message = "#{source.name}の攻撃。d20->#{d20}\n"
-      attack(d20)
+      self.message = source.attack(target,d20)
     else
     end
+
+    self.message += source.victory?(target)
   end
-
-  private
-
-    def attack(d20)
-      case source
-      when Player then player_attack(d20)
-      when Monster then monster_attack(d20)
-      else
-      end
-    end
-
-    def player_attack(d20)
-      case d20
-      when 20
-        self.message += "クリティカルヒット！\n"
-        self.message += "#{target.name}を倒した\n"
-        target.update(hp:0)
-      when 1
-        self.message += "ファンブル！\n"
-        self.message += "#{target.name}は笑った\n"
-      else
-      end
-    end
-
-    def monster_attack(d20)
-      case d20
-      when 20
-        self.message += "痛恨の一撃！\n"
-        self.message += "#{target.name}は死んでしまった！\n"
-        target.update(hp:0)
-      when 1
-        self.message += "#{target.name}はひらりと身をかわした"
-      else
-      end
-    end
 
 end

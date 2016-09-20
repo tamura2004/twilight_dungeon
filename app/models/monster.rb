@@ -22,4 +22,13 @@ class Monster < Creature
     end
   end
 
+  def victory?(player)
+    if player.dead?
+      update(exp: exp + player.exp)
+      "#{player.name}は死んだ！"
+    else
+      ""
+    end
+  end
+
 end

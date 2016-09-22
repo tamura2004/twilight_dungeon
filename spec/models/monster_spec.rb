@@ -1,70 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Monster, type: :model do
-  let(:monster){build(:monster)}
-
-  it "妥当なオブジェクト" do
-    expect(monster).to be_valid
-  end
+  subject{build(:monster)}
+  it{should be_valid}
 
   %w(level hp at df exp).each do |col|
-    it "#{col}は０以上の数字である" do
-      monster[col] = 0
-      expect(monster).to be_valid
+    context "#{col}は0を許容" do
+      subject{build :monster, col => 0}
+      it{should be_valid}
+    end
 
-      [nil,-1,"a"].each do |p|
-        monster[col] = p
-        expect(monster).not_to be_valid
+    [nil,-1,"a"].each do |p|
+      context "#{col}は#{p.inspect}でエラー" do
+        subject{build :player, col => p}
+        it{should_not be_valid}
       end
     end
   end
 
   %w(name skill).each do |col|
-    it "#{col}は空ではならない" do
-      monster[col] = ""
-      expect(monster).not_to be_valid
+    context "#{col}は空ではならない" do
+      subject{build :monster, col => ""}
+      it{should_not be_valid}
     end
   end
 
-  it "名前がゴブリンの場合パラメータ自動セット" do
-    monster = Monster.create(name: "ゴブリン")
-    expect(monster.level).to eq 1
-    expect(monster.hp).to eq 2
-    expect(monster.at).to eq 4
-    expect(monster.df).to eq 1
-    expect(monster.exp).to eq 10
-  end
-
-  it "hp以下のダメージを受けた" do
-    monster.update(hp: 10)
-
-    expect {
-      monster.damaged(3)
-    }.to change {monster.hp}.from(10).to(7)
-  end
-
-  it "hp以上のダメージを受けた" do
-    monster.update(hp: 10)
-
-    expect {
-      monster.damaged(30)
-    }.to change {monster.hp}.from(10).to(0)
-  end
-
-  it "生きているモンスター" do
-    monster.save
-    expect(monster.lived?).to eq true
-    expect(monster.dead?).to eq false
-    expect(Monster.lived).to eq [monster]
-    expect(Monster.dead).to eq []
-  end
-
-  it "死んでいるモンスター" do
-    monster.update(hp: 0)
-    expect(monster.lived?).to eq false
-    expect(monster.dead?).to eq true
-    expect(Monster.lived).to eq []
-    expect(Monster.dead).to eq [monster]
+  context "名前がゴブリンの場合パラメータ自動セット" do
+    subject{create :monster, name: "ゴブリン"}
+    it{should have_attributes level:1,hp:2,at:4,df:1,exp:10}
   end
 
 end

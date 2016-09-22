@@ -4,8 +4,8 @@ RSpec.describe Tool::Notebook, type: :model do
   subject{Tool::Notebook.new}
 
   describe "#initialize" do
-    it{is_expected.to have_attributes message:""}
-    it{is_expected.to respond_to(:log)}
+    it{should have_attributes message:""}
+    it{should respond_to :log}
   end
 
   describe "#log" do

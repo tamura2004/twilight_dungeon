@@ -1,0 +1,2 @@
+class PlayerHandbook::Attack
+end

@@ -1,23 +1,20 @@
 class Player < Creature
-  belongs_to :game
   has_many :items
 
-  validates :name, presence: true
-  validates :skill, presence: true
+  delegate :levelup!, to: :rule
 
-  validates :level, numericality: {greater_than_or_equal_to: 0}
-  validates :hp, numericality: {greater_than_or_equal_to: 0}
-  validates :at, numericality: {greater_than_or_equal_to: 0}
-  validates :df, numericality: {greater_than_or_equal_to: 0}
-  validates :exp, numericality: {greater_than_or_equal_to: 0}
+  after_initialize do
+    @rule = PlayerHandbook::LevelUp.new(self)
+  end
 
-  def victory?(monster)
-    if monster.dead?
-      update(exp: exp + monster.exp)
-      "#{monster.name}を倒した。#{monster.exp}経験点を得た。"
-    else
-      ""
-    end
+  def die!
+    super
+    log "#{name}は死んでしまった！"
+  end
+
+  def get_exp(monster)
+    update(exp: exp + monster.exp)
+    log "#{monster.exp}経験点を得た。"
   end
 
 end

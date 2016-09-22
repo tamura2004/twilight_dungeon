@@ -12,8 +12,7 @@ RSpec.describe Calc::Attack, type: :model do
 
   describe "#deal_damage" do
     subject{calc.deal_damage(attacker)}
-    it{should be <= 120}
-    it{should be >= 80}
+    it{should be_between 80, 120}
   end
 
   describe "#take_damage" do

@@ -1,4 +1,4 @@
-class DungeonMastersGuild::Attack
+class DungeonMastersGuide::Attack
   delegate :get_exp, :levelup, to: :attacker
   delegate :dead?, :die!, to: :defender
   delegate :log, to: :action
@@ -15,7 +15,7 @@ class DungeonMastersGuild::Attack
       log "#{@defender}は既に死んでいる。"
     else
       attack!
-      if dead? && @attacker.is_a? Player
+      if dead? && @attacker.is_a?(Player)
         get_exp(@defender,@logger)
         levelup!
       end

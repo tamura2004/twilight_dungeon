@@ -9,6 +9,11 @@ class Action < ApplicationRecord
   after_initialize do
     @dungeon_master = DungeonMaster.new(self)
   end
+
+  def log(str)
+    self.message += str + "\n"
+  end
+
 end
 
 
